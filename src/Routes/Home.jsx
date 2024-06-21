@@ -5,13 +5,13 @@ import { useContextProvider } from '../Components/utils/global.context';
 //Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
 
 const Home = () => {
-  const {dentists} = useContextProvider();
+  const {state} = useContextProvider();
   return (
     <main className="">
       <h1>Home</h1>
       <div className='card-grid'>
-        {dentists.length > 0 ? (
-          dentists.map(dentist => (
+      {state.dentists.length > 0 ? (
+          state.dentists.map(dentist => (
             <Card
               key={dentist.id}
               id={dentist.id}

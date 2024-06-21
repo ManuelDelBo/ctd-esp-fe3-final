@@ -2,18 +2,25 @@ import React from "react";
 import Card from "../Components/Card";
 import { useContextProvider } from "../Components/utils/global.context";
 
-//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
-
 const Favs = () => {
-  const {dentists} = useContextProvider();
+  const { state } = useContextProvider();
 
   return (
     <>
       <h1>Dentistas Favoritos</h1>
       <div className="card-grid">
-        <ul>
-          <li></li>
-        </ul>
+        {state.favorites.length > 0 ? (
+          state.favorites.map(dentist => (
+            <Card
+              key={dentist.id}
+              id={dentist.id}
+              name={dentist.name}
+              username={dentist.username}
+            />
+          ))
+        ) : (
+          <p>No hay dentistas favoritos.</p>
+        )}
       </div>
     </>
   );

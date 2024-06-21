@@ -1,19 +1,29 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useReducer, useState } from "react";
 import axios from "axios";
 
-export const initialState = {theme: "", data: []}
+export const initialState = { theme: "", dentists: [], favorites: [] };
 
-export const ContextGlobal = createContext({ dentists: [] });
+export const ContextGlobal = createContext();
+
+const reducer = (state, action) => {
+  switch(action.type){
+    case "SET_DENTISTS":
+      return { ...state, dentists: action.payload };
+    case "ADD_FAV":
+      return { ...state, favorites: [...state.favorites, action.payload] };
+    default:
+      return state;
+  }
+}
 
 export const ContextProvider = ({ children }) => {
-  const [dentists, setDentists] = useState([]);
-  const url = "https://jsonplaceholder.typicode.com/users";
-
+  const [state, dispatch] = useReducer(reducer, initialState);
+  
   useEffect(() => {
     const fetchDentists = async () => {
       try {
-        const response = await axios.get(url);
-        setDentists(response.data);
+        const response = await axios.get("https://jsonplaceholder.typicode.com/users");
+        dispatch({ type: "SET_DENTISTS", payload: response.data });
       } catch (error) {
         console.error('Error fetching dentists:', error);
       }
@@ -21,16 +31,15 @@ export const ContextProvider = ({ children }) => {
     fetchDentists();
   }, []);
 
-
   return (
-    <ContextGlobal.Provider value={{dentists}}>
+    <ContextGlobal.Provider value={{ state, dispatch }}>
       {children}
     </ContextGlobal.Provider>
   );
 };
 
-export default ContextProvider
+export default ContextProvider;
 
 export const useContextProvider = () => {
-  return useContext(ContextGlobal)
+  return useContext(ContextGlobal);
 }

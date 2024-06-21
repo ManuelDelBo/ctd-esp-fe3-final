@@ -11,8 +11,7 @@ import ContextProvider, { ContextGlobal } from "./Components/utils/global.contex
 
 function App() {
   return (
-    <BrowserRouter>
-      <ContextProvider>
+
         <div className="App">
           <Navbar/>
           <Routes>
@@ -24,8 +23,7 @@ function App() {
           </Routes>
           <Footer/>
         </div>
-      </ContextProvider>
-    </BrowserRouter>
+
   );
 }
 
