@@ -1,22 +1,55 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import axios from 'axios';
 import { useContextProvider } from '../Components/utils/global.context';
 
-
-//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
-
 const Detail = () => {
-  const {state} = useContextProvider();
-  const params = useParams();
-  // Consumiendo el parametro dinamico de la URL deberan hacer un fetch a un user en especifico
+  const { id } = useParams(); 
+  const { state } = useContextProvider();
+  const [dentist, setDentist] = useState(null); 
+  const url = `https://jsonplaceholder.typicode.com/users/${id}`; 
+
+  useEffect(() => {
+
+    const fetchDentist = async () => {
+      try {
+        const response = await axios.get(url);
+        setDentist(response.data); 
+      } catch (error) {
+        console.error('Error fetching dentist:', error);
+      }
+    };
+    fetchDentist();
+  }, [id]); 
 
   return (
-    <>
-      <h1>Detail Dentist id </h1>
-      {/* aqui deberan renderizar la informacion en detalle de un user en especifico */}
-      {/* Deberan mostrar el name - email - phone - website por cada user en especifico */}
-    </>
-  )
+    <div className={state.theme}>
+      <h1>Detalle del dentista</h1>
+      {dentist ? (
+        <div className="grid-container">
+          <div className="grid-item">
+            <p className="label">Nombre:</p>
+            <p>{dentist.name}</p>
+          </div>
+          <div className="grid-item">
+            <p className="label">Email:</p>
+            <p>{dentist.email}</p>
+          </div>
+          <div className="grid-item">
+            <p className="label">Teléfono:</p>
+            <p>{dentist.phone}</p>
+          </div>
+          <div className="grid-item">
+            <p className="label">Sitio web:</p>
+            <p>{dentist.website}</p>
+          </div>
+        </div>
+      ) : (
+        <p>Cargando...</p>
+      )}
+    </div>
+  );
 }
 
-export default Detail
+export default Detail;
+

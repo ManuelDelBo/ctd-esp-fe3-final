@@ -17,7 +17,7 @@ const Card = ({ name, username, id }) => {
   };
 
   return (
-    <div className="card">
+    <div className={`card ${state.theme}`}>
       <img src={`${process.env.PUBLIC_URL}/images/doctor.jpg`} alt="Doctor" />
       <Link to={`/dentist/${id}`}>
       <h3>{name}</h3>

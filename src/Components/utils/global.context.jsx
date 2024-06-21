@@ -1,12 +1,18 @@
 import { createContext, useContext, useEffect, useReducer, useState } from "react";
 import axios from "axios";
 
-export const initialState = { theme: "", dentists: [], favorites: [] };
+export const initialState = { 
+  theme: "light", 
+  dentists: [], 
+  favorites: [] 
+};
 
 export const ContextGlobal = createContext();
 
 const reducer = (state, action) => {
   switch(action.type){
+    case "SET_THEME":
+      return { ...state, theme: action.payload };
     case "SET_DENTISTS":
       return { ...state, dentists: action.payload };
     case "ADD_FAV":

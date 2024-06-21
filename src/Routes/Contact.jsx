@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import Form from '../Components/Form'
 import Error from '../Components/Error';
-
-//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
+import { useContextProvider } from '../Components/utils/global.context';
 
 const Contact = () => {
+  const { state } = useContextProvider();
+
   const [datos, setDatos] = useState({
     nombre: "",
     email: "",
@@ -29,10 +30,10 @@ const handleSubmit = (event) => {
     }
 };
   return (
-    <div >
+    <div className={state.theme}>
       <h1>Dejanos tus datos</h1>
       <>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='Contact'>
         <label>Nombre:</label>
         <input
             type="text"
@@ -40,6 +41,7 @@ const handleSubmit = (event) => {
             onChange={(event) =>
             setDatos({ ...datos, nombre: event.target.value })
             }
+            className='imputsContact'
         />
         <label>Email:</label>
         <input
@@ -48,10 +50,11 @@ const handleSubmit = (event) => {
             onChange={(event) =>
               setDatos({ ...datos, email: event.target.value })
             }
+            className='imputsContact'
             />
-            <button type="submit">ENVIAR</button>
+            <button type="submit" className='buttonContact'>ENVIAR</button>
         </form>
-        {show && <h1>Gracias {datos.nombre}, te contactaremos via mail</h1>}
+        {show && <h1>¡Gracias {datos.nombre}!, te contactaremos via mail</h1>}
         {error && <Error />}
         </>
     </div>

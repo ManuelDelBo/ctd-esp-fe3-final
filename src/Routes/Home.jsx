@@ -2,13 +2,11 @@ import React from 'react'
 import Card from '../Components/Card'
 import { useContextProvider } from '../Components/utils/global.context';
 
-//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
-
 const Home = () => {
   const {state} = useContextProvider();
   return (
-    <main className="">
-      <h1>Home</h1>
+    <main className={state.theme}>
+      <h1>Dentistas</h1>
       <div className='card-grid'>
       {state.dentists.length > 0 ? (
           state.dentists.map(dentist => (

@@ -1,10 +1,12 @@
 import React from "react";
+import { useContextProvider } from "./utils/global.context";
 
 const Error = () => {
+    const { state } = useContextProvider();
     return (
-    <div style={{ backgroundColor: "red" }}>
+    <div className="error">
         <h3>
-        Por favor chequea que la información sea correcta:
+        Hay un error en la información aportada:
         </h3>
         <h4>
         -El nombre debe tener mas de 5 caracteres.
